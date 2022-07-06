@@ -9,7 +9,7 @@ interface IResponse {
 }
 function configure() {
     const url = "https://www.mercadolivre.com.br/";
-    const search = readlineSync.question('Informe o que quer pesquisar: ') || 'exemplo';
+    const search = readlineSync.question('Informe o que gostaria de pesquisar: ') || 'exemplo';
 
     return {
         url,
