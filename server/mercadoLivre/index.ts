@@ -1,5 +1,5 @@
 import { Page } from 'puppeteer';
-
+import readlineSync from 'readline-sync';
 
 interface IResponse {
     title?: string | null;
@@ -9,7 +9,7 @@ interface IResponse {
 }
 function configure() {
     const url = "https://www.mercadolivre.com.br/";
-    const search = "macbook";
+    const search = readlineSync.question('Informe o que quer pesquisar: ') || 'exemplo';
 
     return {
         url,
@@ -22,8 +22,8 @@ async function getPages(page: Page, links: any) {
     let c = 1;
 
     for (const link of links) {
-        if (c >= 10) break;
-        console.log('Pagina ', c);
+        if (c > 10) break;
+        console.log('Produto ', c);
         await page.goto(link)
         await page.waitForSelector('.ui-pdp-title');
 
@@ -64,7 +64,6 @@ async function MercadoLivre(page: Page) {
     ])
 
     const links = await page.$$eval('.ui-search-result__image > a', (el) => el.map((link: any) => link.href));
-
 
     let products = await getPages(page, links);
     console.log(products);
